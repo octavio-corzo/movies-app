@@ -1,13 +1,13 @@
 <template>
     <a-row>
-        <a-col v-for="(item, index ) in useMovie.movieDiscover" :key="index" :xs="{ span: 5, offset: 1 }"
+        <a-col v-for="(item, index ) in useSeries.series" :key="index" :xs="{ span: 5, offset: 1 }"
             :lg="{ span: 6, offset: 2 }">
 
             <a-card class="mt-5 mb-5" hoverable style="width: 240px">
                 <template #cover>
                     <img style="width: 240px; height: auto;" :src="getImageUrl(item.poster_path)" alt="Backdrop Image" />
                 </template>
-                <a-card-meta style="text-align: center;" :title="item.title">
+                <a-card-meta style="text-align: center;" :title="item.original_name">
                     <template #description>{{ }}</template>
                 </a-card-meta>
             </a-card>
@@ -17,11 +17,11 @@
 </template>
 
 <script setup>
-import { useMovieStore } from "../store/movies";
+import { useSeriesStore } from "../store/series";
 
-const useMovie = useMovieStore()
+const useSeries = useSeriesStore()
 
-useMovie.getMovieDiscover();
+useSeries.getSeries();
 
 const getImageUrl = (posterPath) => {
     if (posterPath) {

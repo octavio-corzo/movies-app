@@ -1,4 +1,3 @@
-// Importa las dependencias necesarias
 import { defineStore } from "pinia";
 import axios from "axios";
 
@@ -7,7 +6,6 @@ const TOKEN =
 
 const API = "https://api.themoviedb.org/3/";
 
-// Define el store de Pinia
 export const useMovieStore = defineStore("movies", {
   state: () => ({
     movieGenres: [],
@@ -51,27 +49,6 @@ export const useMovieStore = defineStore("movies", {
             this.movieDiscover = response.data.results;
             console.log(response.data.results);
             return response.data.results;
-          });
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async getImgMovieDiscover() {
-      try {
-        if (this.imgMovieDiscover.length !== 0) {
-          return;
-        }
-        let headers = {
-          Authorization: `Bearer ${TOKEN}`,
-          "Content-Type": "application/json",
-        };
-
-        await axios
-          .get(`${API}discover/movie`, { headers })
-          .then((response) => {
-            this.movieDiscover = response.data.results.backdrop_path;
-            console.log(response.data.results.backdrop_path);
-            return response.data.results.backdrop_path;
           });
       } catch (error) {
         console.log(error);

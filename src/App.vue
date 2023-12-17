@@ -3,9 +3,9 @@
     <a-layout-header :style="{ position: 'fixed', zIndex: 1, width: '100%' }">
       <div class="logo" />
       <a-menu theme="dark" mode="horizontal" :style="{ lineHeight: '64px' }">
-        <a-menu-item key="1">nav 1</a-menu-item>
-        <a-menu-item key="2">nav 2</a-menu-item>
-        <a-menu-item key="3">nav 3</a-menu-item>
+        <a-menu-item @click="router.push('/')" key="1">Home</a-menu-item>
+        <a-menu-item @click="router.push('/movies')" key="2">Movies</a-menu-item>
+        <a-menu-item @click="router.push('/series')" key="3">Tv series</a-menu-item>
       </a-menu>
     </a-layout-header>
     <a-layout-content :style="{ padding: '0 50px', marginTop: '64px' }">
@@ -20,7 +20,8 @@
 
 
 <script setup>
-
+import { useRouter } from "vue-router";
+const router = useRouter();
 </script>
 
 
