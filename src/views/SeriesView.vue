@@ -1,4 +1,13 @@
 <template>
+    <a-divider></a-divider>
+    <div>
+        <v-carousel :show-arrows="false">
+            <v-carousel-item v-for="(item, index ) in useSeries.series" :key="index" style="width:150 ; height: auto;"
+                :src="getImageUrl(item.backdrop_path)" cover>
+            </v-carousel-item>
+        </v-carousel>
+    </div>
+    <a-divider></a-divider>
     <a-row>
         <a-col v-for="(item, index ) in useSeries.series" :key="index" :xs="{ span: 5, offset: 1 }"
             :lg="{ span: 6, offset: 2 }">
@@ -23,6 +32,9 @@ const useSeries = useSeriesStore()
 
 useSeries.getSeries();
 
+const onChange = current => {
+    console.log(current);
+};
 const getImageUrl = (posterPath) => {
     if (posterPath) {
         const baseUrl = 'https://image.tmdb.org/t/p/original';

@@ -13,13 +13,16 @@
     "axios": "^1.6.2",
     "node-fetch": "^2.7.0",
     "pinia": "^2.1.7",
+    "swiper": "^11.0.5",
     "unplugin-vue-components": "^0.26.0",
     "vue": "^3.3.11",
+    "vue-carousel": "^0.18.0",
     "vue-router": "^4.2.5",
     "vuetify": "^3.4.7"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5.2",
+    "sass": "^1.69.5",
     "vite": "^5.0.8"
   }
 }
