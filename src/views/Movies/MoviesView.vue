@@ -9,7 +9,7 @@
     </div>
     <a-divider></a-divider>
     <div class="container">
-        <v-row>
+        <a-row>
             <a-col v-for="(item, index ) in useMovie.movieDiscover" :key="index" :xs="{ span: 5, offset: 1 }"
                 :lg="{ span: 6, offset: 2 }">
 
@@ -27,7 +27,7 @@
                 </a-card>
 
             </a-col>
-        </v-row>
+        </a-row>
     </div>
 </template>
 
