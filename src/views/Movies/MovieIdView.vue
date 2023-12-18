@@ -50,11 +50,31 @@
             </a-col>
         </a-row>
         <a-divider></a-divider>
+        <a-typography-title class="ml-5" :level="2">Similar movies:</a-typography-title>
+        <a-divider></a-divider>
+        <a-row :gutter="[48, 32]">
+            <a-col v-for="(item, index) in movie.similar" :key="index" :span="6">
+                <a-card class="mt-5 mb-5" hoverable style="width: 240px; height: auto;">
+                    <template #cover>
+                        <img @click="handleSubmit(item.id)" style="width: 240px; height: auto;"
+                            :src="getActorImageUrl(item.poster_path)" alt="Profile image" />
+                    </template>
+                    <a-card-meta @click="handleSubmit(item.id)" style="text-align: center;" :title="item.original_title">
+                        <template #description>{{}}</template>
+                    </a-card-meta>
+                    <!-- <a-menu @click="handleSubmit(item.id)">
+                        <a-menu-item style="background-color: #001529; color: #FFFF;" class="text-center">Info</a-menu-item>
+                    </a-menu> -->
+                </a-card>
+            </a-col>
+        </a-row>
     </div>
 </template>
   
 <script>
 import axios from 'axios';
+import router from "../../router";
+
 
 const TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjOTFmOTVmMzI0NDlhMDBhMmQ1YmFhZTg1NjgxNzdjMCIsInN1YiI6IjY1N2U3MDkxOTA0ZjZkMDcwOTdmNWNjYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DhXeFsj26ssDIkopduQw7Zf-GQBrNLgGSElZON7vc-4";
 
@@ -72,6 +92,8 @@ export default {
             movie: {
                 images: [],
                 cast: [],
+                reviews: [],
+                similar: [],
             },
         };
     },
@@ -84,6 +106,14 @@ export default {
                 this.movie = response.data;
                 this.getImages();
                 this.getCast();
+                this.getReviews();
+                this.getSimilarMovie();
+            });
+        },
+        getSimilarMovie() {
+            const url = `${API}movie/${this.movieId}/similar`;
+            axios.get(url, { headers }).then((response) => {
+                this.movie.similar = response.data.results;
             });
         },
         getImages() {
@@ -126,6 +156,15 @@ export default {
                 return null;
             }
         },
+        getReviews() {
+            const url = `${API}movie/${this.movieId}/reviews`;
+            axios.get(url, { headers }).then((response) => {
+                this.movie.reviews = response.data.results;
+            })
+        },
+        handleSubmit(id) {
+            router.push(`/movie/${id}`);
+        }
     },
 };
 </script>
