@@ -6,11 +6,16 @@ const TOKEN =
 
 const API = "https://api.themoviedb.org/3/";
 
+let headers = {
+  Authorization: `Bearer ${TOKEN}`,
+  "Content-Type": "application/json",
+};
+
 export const useMovieStore = defineStore("movies", {
   state: () => ({
     movieGenres: [],
     movieDiscover: [],
-    imgMovieDiscover: [],
+    movie: {},
   }),
   actions: {
     async getMovieGenres() {
@@ -18,11 +23,6 @@ export const useMovieStore = defineStore("movies", {
         if (this.movieGenres.length !== 0) {
           return;
         }
-        let headers = {
-          Authorization: `Bearer ${TOKEN}`,
-          "Content-Type": "application/json",
-        };
-
         await axios
           .get(`${API}genre/movie/list`, { headers })
           .then((response) => {
@@ -38,11 +38,6 @@ export const useMovieStore = defineStore("movies", {
         if (this.movieDiscover.length !== 0) {
           return;
         }
-        let headers = {
-          Authorization: `Bearer ${TOKEN}`,
-          "Content-Type": "application/json",
-        };
-
         await axios
           .get(`${API}discover/movie`, { headers })
           .then((response) => {
@@ -53,6 +48,13 @@ export const useMovieStore = defineStore("movies", {
       } catch (error) {
         console.log(error);
       }
+    },
+    async getMovie(id) {
+      await axios.get(`${API}movie/${id}`, { headers }).then((response) => {
+        this.movie = response.data;
+        console.log(response.data);
+        return this.movie;
+      });
     },
   },
 });

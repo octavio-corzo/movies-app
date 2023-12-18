@@ -4,15 +4,6 @@
         <v-carousel :show-arrows="false">
             <v-carousel-item v-for="(item, index ) in useMovie.movieDiscover" :key="index"
                 style="width: 200px ; height: auto; align-content: center;" :src="getImageUrl(item.backdrop_path)" cover>
-
-                <!-- <div class="mb-20 text-container">
-                    <div class="mb-20 text-h2">
-                        {{ item.title }}
-                    </div>
-                    <div class="text-h5">
-                        {{ item.overview }}
-                    </div>
-                </div> -->
             </v-carousel-item>
         </v-carousel>
     </div>
@@ -30,6 +21,9 @@
                     <a-card-meta style="text-align: center;" :title="item.title">
                         <template #description>{{ }}</template>
                     </a-card-meta>
+                    <a-menu @click="handleSubmit(item.id)">
+                        <a-menu-item style="background-color: #001529; color: #FFFF;" class="text-center">Info</a-menu-item>
+                    </a-menu>
                 </a-card>
 
             </a-col>
@@ -38,11 +32,20 @@
 </template>
 
 <script setup>
-import { useMovieStore } from "../store/movies";
+import router from "../../router";
+import { useMovieStore } from "../../store/movies";
 
 const useMovie = useMovieStore()
 
 useMovie.getMovieDiscover();
+useMovie.getMovie('897087');
+
+const handleSubmit = (id) => {
+    router.push(`/movie/${id}`);
+    console.log(id);
+    console.log(useMovie.movie);
+}
+
 
 const getImageUrl = (posterPath) => {
     if (posterPath) {
@@ -56,9 +59,6 @@ const getImageUrl = (posterPath) => {
 
 <style scoped>
 .text-container {
-    position: absolute;
-    bottom: 0;
-    left: 0;
     background-color: rgba(0, 0, 0, 0.7);
 }
 
@@ -69,12 +69,11 @@ const getImageUrl = (posterPath) => {
 
 .text-h2 {
     font-size: 24px;
-    /* Tamaño de fuente para el texto h2 /
-margin-bottom: 5px; / Espacio entre los dos textos */
+
 }
 
 .text-h5 {
     font-size: 16px;
-    /* Tamaño de fuente para el texto h5 */
+
 }
 </style>

@@ -1,5 +1,6 @@
 <template>
     <a-divider></a-divider>
+
     <div>
         <v-carousel :show-arrows="false">
             <v-carousel-item v-for="(item, index ) in useSeries.series" :key="index" style="width:150 ; height: auto;"
@@ -17,7 +18,8 @@
                     <img style="width: 240px; height: auto;" :src="getImageUrl(item.poster_path)" alt="Backdrop Image" />
                 </template>
                 <a-card-meta style="text-align: center;" :title="item.original_name">
-                    <template #description>{{ }}</template>
+                    <template v-if="item.vote_average > 5" style="color: green;" #description>{{ item.vote_average
+                    }}</template>
                 </a-card-meta>
             </a-card>
 
@@ -26,15 +28,12 @@
 </template>
 
 <script setup>
-import { useSeriesStore } from "../store/series";
+import { useSeriesStore } from "../../store/series";
 
 const useSeries = useSeriesStore()
 
 useSeries.getSeries();
 
-const onChange = current => {
-    console.log(current);
-};
 const getImageUrl = (posterPath) => {
     if (posterPath) {
         const baseUrl = 'https://image.tmdb.org/t/p/original';
