@@ -1,6 +1,30 @@
 <template>
     <div>
         <h1>{{ serie['name'] }}</h1>
+
+
+
+
+
+        <a-divider></a-divider>
+        <a-typography-title class="ml-5" :level="2">Similar series:</a-typography-title>
+        <a-divider></a-divider>
+        <a-row :gutter="[48, 32]">
+            <a-col v-for="(item, index) in serie.similar" :key="index" :span="6">
+                <a-card class="mt-5 mb-5" hoverable style="width: 240px; height: auto;">
+                    <template #cover>
+                        <img @click="handleSubmit(item.id)" style="width: 240px; height: auto;"
+                            :src="getActorImageUrl(item.poster_path)" alt="Profile image" />
+                    </template>
+                    <a-card-meta @click="handleSubmit(item.id)" style="text-align: center;" :title="item.original_title">
+                        <template #title>{{ item.name }}</template>
+                    </a-card-meta>
+                    <!-- <a-menu @click="handleSubmit(item.id)">
+                        <a-menu-item style="background-color: #001529; color: #FFFF;" class="text-center">Info</a-menu-item>
+                    </a-menu> -->
+                </a-card>
+            </a-col>
+        </a-row>
     </div>
 </template>
 
@@ -34,11 +58,49 @@ export default {
         getSerie() {
             axios.get(`${API}tv/${this.serieId}`, { headers }).then((response) => {
                 this.serie = response.data;
+                this.getImages();
+                this.getSimilarSerie();
             });
-        }
-    }
-
+        },
+        getSimilarSerie() {
+            const url = `${API}tv/${this.serieId}/similar`;
+            axios.get(url, { headers }).then((response) => {
+                this.serie.similar = response.data.results;
+            });
+        },
+        getImages() {
+            const url = `${API}tv/${this.serieId}/images`;
+            axios.get(url, { headers }).then((response) => {
+                this.serie.images = response.data.backdrops;
+            });
+        },
+        getImgSerie(posterPath) {
+            if (posterPath) {
+                const baseUrl = 'https://image.tmdb.org/t/p/original';
+                return `${baseUrl}${posterPath}`;
+            } else {
+                return null;
+            }
+        },
+        getImageUrl(filePath) {
+            if (filePath) {
+                const baseUrl = 'https://image.tmdb.org/t/p/original';
+                return `${baseUrl}${filePath}`;
+            } else {
+                return null;
+            }
+        },
+        getActorImageUrl(profilePath) {
+            if (profilePath) {
+                const baseUrl = 'https://image.tmdb.org/t/p/original';
+                return `${baseUrl}${profilePath}`;
+            } else {
+                return null;
+            }
+        },
+    },
 }
+
 
 </script>
 
