@@ -9,6 +9,7 @@ const API = "https://api.themoviedb.org/3/";
 export const useSeriesStore = defineStore("series", {
   state: () => ({
     series: [],
+    serie: {},
   }),
   actions: {
     async getSeries() {
@@ -27,6 +28,13 @@ export const useSeriesStore = defineStore("series", {
           return response.data.results;
         });
       } catch (error) {}
+    },
+    async getSerie(id) {
+      await axios.get(`${API}tv/${id}`, { headers }).then((response) => {
+        this.serie = response.data;
+        console.log(response.data);
+        return this.serie;
+      });
     },
   },
 });

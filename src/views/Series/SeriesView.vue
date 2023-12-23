@@ -21,6 +21,9 @@
                     <template v-if="item.vote_average > 5" style="color: green;" #description>{{ item.vote_average
                     }}</template>
                 </a-card-meta>
+                <a-menu @click="handleSubmit(item.id)">
+                    <a-menu-item style="background-color: #001529; color: #FFFF;" class="text-center">Info</a-menu-item>
+                </a-menu>
             </a-card>
 
         </a-col>
@@ -29,7 +32,7 @@
 
 <script setup>
 import { useSeriesStore } from "../../store/series";
-
+import router from "../../router";
 const useSeries = useSeriesStore()
 
 useSeries.getSeries();
@@ -42,5 +45,9 @@ const getImageUrl = (posterPath) => {
         return null;
     }
 };
+
+const handleSubmit = (id) => {
+    router.push(`/serie/${id}`)
+}
 
 </script>
