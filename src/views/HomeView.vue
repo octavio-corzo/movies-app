@@ -1,5 +1,6 @@
 <template>
     <a-divider></a-divider>
+    <search-component />
     <!-- <div style="text-align: left;" class="mb-5 text-h2">
         Welcome
     </div> -->
@@ -41,6 +42,8 @@
 <script setup>
 import { useMovieStore } from "../store/movies";
 import { useSeriesStore } from "../store/series";
+import SearchComponent from "../components/Search.vue";
+
 
 const useMovie = useMovieStore();
 const useSerie = useSeriesStore();

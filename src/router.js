@@ -6,6 +6,8 @@ import HomeView from "./views/HomeView.vue";
 import SeriesView from "./views/Series/SeriesView.vue";
 import SerieIdView from "./views/Series/SerieIdView.vue";
 import Login from "./views/Login.vue";
+import SearchResults from "./components/SearchResults.vue";
+
 const routes = [
   { path: "/", component: HomeView },
   { path: "/movies", component: MoviesView },
@@ -13,6 +15,11 @@ const routes = [
   { path: "/movie/:id", component: MovieIdView },
   { path: "/serie/:id", component: SerieIdView },
   { path: "/login", component: Login },
+  {
+    path: "/search-results",
+    name: "SearchResults",
+    component: SearchResults,
+  },
 ];
 
 const router = createRouter({
