@@ -12,7 +12,7 @@
         </v-carousel>
     </div>
     <a-divider></a-divider> -->
-    <div class="container">
+    <div class="mt-5 container">
         <v-carousel :show-arrows="false">
             <v-carousel-item v-for="(item, index ) in useMovie.movieDiscover" :key="index"
                 style="width: 200px ; height: auto; align-content: center;" :src="getImageUrl(item.backdrop_path)" cover>
