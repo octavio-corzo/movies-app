@@ -1,11 +1,30 @@
 <template>
     <div>
-        <h1>{{ serie['name'] }}</h1>
-
-
-
-
-
+        <a-divider></a-divider>
+        <div class="text-container">
+            <a-row>
+                <a-col :span="18" :push="6">
+                    <img class="mt-5" style="width: 800px; height: auto;" :src="getImgSerie(serie['backdrop_path'])" alt=""
+                        cover />
+                </a-col>
+                <a-col :span="6" :pull="18">
+                    <img class="ml-5 mt-5" style="width: 240px; height: auto;" :src="getImgSerie(serie['poster_path'])"
+                        alt="" />
+                </a-col>
+            </a-row>
+            <a-typography-title class="ml-5 mt-5" style="color: #FFFF;">{{ serie['name'] }}</a-typography-title>
+            <div class="container">
+                <p class="ml-5" style="padding-bottom: 20px; color: #FFFF;">{{ serie['overview'] }}</p>
+            </div>
+        </div>
+        <a-divider></a-divider>
+        <div class="container">
+            <v-carousel>
+                <v-carousel-item v-for="(item, index) in serie.images" :key="index" style="height: auto;">
+                    <img :src="getImageUrl(item.file_path)" alt="" style="width: 100%;" />
+                </v-carousel-item>
+            </v-carousel>
+        </div>
         <a-divider></a-divider>
         <a-typography-title class="ml-5" :level="2">Similar series:</a-typography-title>
         <a-divider></a-divider>
@@ -47,7 +66,11 @@ export default {
     data() {
         return {
             serieId: this.$route.params.id,
-            serie: {},
+            serie: {
+                images: [],
+                cast: [],
+                reviews: [],
+            },
         };
 
     },
@@ -59,6 +82,7 @@ export default {
             axios.get(`${API}tv/${this.serieId}`, { headers }).then((response) => {
                 this.serie = response.data;
                 this.getImages();
+                this.getCast();
                 this.getSimilarSerie();
             });
         },
@@ -97,6 +121,16 @@ export default {
             } else {
                 return null;
             }
+        },
+        getCastSerie(id) {
+            const url = `https://api.themoviedb.org/3/tv/${id}/credits?language=en-US`;
+            return url;
+        },
+        getCast() {
+            const castUrl = this.getCastSerie(this.serieId);
+            axios.get(castUrl, { headers }).then((response) => {
+                this.serie.cast = response.data.cast;
+            });
         },
     },
 }
