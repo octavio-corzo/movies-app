@@ -4,14 +4,6 @@
     <div>
         <a-input-search v-model:value="searchQuery" placeholder="Buscar películas" style="width: 200px"
             @search="handleSearch" />
-        <div v-if="searchResults.length > 0">
-            <h2>Resultados de la búsqueda:</h2>
-            <ul>
-                <li v-for="(result, index) in searchResults" :key="index">
-                    {{ result.title }}
-                </li>
-            </ul>
-        </div>
     </div>
 </template>
   

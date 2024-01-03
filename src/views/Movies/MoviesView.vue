@@ -1,5 +1,7 @@
 <template>
     <a-divider></a-divider>
+    <search-component />
+    <a-divider></a-divider>
     <div class="container">
         <v-carousel :show-arrows="false">
             <v-carousel-item v-for="(item, index ) in useMovie.movieDiscover" :key="index"
@@ -34,11 +36,12 @@
 <script setup>
 import router from "../../router";
 import { useMovieStore } from "../../store/movies";
+import SearchComponent from "../../components/Search.vue";
 
 const useMovie = useMovieStore()
 
 useMovie.getMovieDiscover();
-useMovie.getMovie('897087');
+useMovie.getTrendingMovies();
 
 const handleSubmit = (id) => {
     router.push(`/movie/${id}`);

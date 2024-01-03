@@ -6,12 +6,34 @@ const TOKEN =
 
 const API = "https://api.themoviedb.org/3/";
 
+let headers = {
+  Authorization: `Bearer ${TOKEN}`,
+  "Content-Type": "application/json",
+};
+
 export const useSeriesStore = defineStore("series", {
   state: () => ({
     series: [],
+    trendingSeries: [],
     serie: {},
   }),
   actions: {
+    async getTrendingSeries() {
+      try {
+        if (this.trendingSeries.length !== 0) {
+          return;
+        }
+        await axios
+          .get(`${API}trending/tv/week`, { headers })
+          .then((response) => {
+            this.trendingSeries = response.data.results;
+            console.log("Tendencias Series", response.data.results);
+            return response.data.results;
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async getSeries() {
       try {
         if (this.series.length !== 0) {

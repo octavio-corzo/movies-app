@@ -15,9 +15,26 @@ export const useMovieStore = defineStore("movies", {
   state: () => ({
     movieGenres: [],
     movieDiscover: [],
+    trendingMovies: [],
     movie: {},
   }),
   actions: {
+    async getTrendingMovies() {
+      try {
+        if (this.trendingMovies.length !== 0) {
+          return;
+        }
+        await axios
+          .get(`${API}trending/movie/week`, { headers })
+          .then((response) => {
+            this.trendingMovies = response.data.results;
+            console.log("Tendencias", response.data.results);
+            return response.data.results;
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async getMovieGenres() {
       try {
         if (this.movieGenres.length !== 0) {
