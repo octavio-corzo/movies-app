@@ -47,21 +47,52 @@
             </a-col>
         </a-row>
     </div>
+    <a-divider></a-divider>
+    <a-typography-title>Trending People</a-typography-title>
+    <a-divider></a-divider>
+    <div class="container">
+        <a-row :gutter="[8, 16]">
+            <a-col v-for="(item, index ) in usePeople.trendingPeople" :key="index" :span="8">
+                <a-card hoverable class="text-center ml-5 mb-5 mt-5">
+                    <a-avatar :src="getImageUrl(item.profile_path)" :size="300" />
+                    <a-typography-title class="mt-2 text-center" :level="5">{{ item.name }}</a-typography-title>
+                    <a-menu>
+                        <a-menu-item @click="handleSubmit(item.id)" style="background-color: #001529; color: #FFFF;"
+                            class="mt-2 text-center">
+                            More info</a-menu-item>
+                    </a-menu>
+                </a-card>
+
+            </a-col>
+        </a-row>
+    </div>
 </template>
 
 <script setup>
+import router from "../router";
 import { useMovieStore } from "../store/movies";
 import { useSeriesStore } from "../store/series";
+import { usePeopleStore } from "../store/people";
 import SearchComponent from "../components/Search.vue";
 
 
 const useMovie = useMovieStore();
 const useSerie = useSeriesStore();
+const usePeople = usePeopleStore();
 
+usePeople.getTrendingPeople();
 useMovie.getMovieDiscover();
 useMovie.getTrendingMovies()
 useSerie.getSeries();
 useSerie.getTrendingSeries();
+
+
+const handleSubmit = (id) => {
+    router.push(`/person/${id}`);
+    console.log(id);
+    console.log(usePeople.person);
+}
+
 
 const getImageUrl = (posterPath) => {
     if (posterPath) {

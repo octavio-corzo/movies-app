@@ -1,5 +1,3 @@
-<!-- SearchResults.vue -->
-
 <template>
     <a-divider></a-divider>
     <h2>Resultados de la búsqueda:</h2>
@@ -17,7 +15,7 @@
                     <a-card-meta style="text-align: center;" :title="item.title">
                         <template #description>{{ }}</template>
                     </a-card-meta>
-                    <a-menu @click="handleSubmit(item.id)">
+                    <a-menu @click="handleSubmit(item)">
                         <a-menu-item style="background-color: #001529; color: #FFFF;" class="text-center">Info</a-menu-item>
                     </a-menu>
                 </a-card>
@@ -51,11 +49,13 @@ export default {
                 return null;
             }
         },
-        handleSubmit(id) {
-            router.push(`/movie/${id}`);
-            console.log(id);
+        handleSubmit(item) {
+            if (item.media_type === "movie") {
+                router.push(`/movie/${item.id}`);
+            } else if (item.media_type === 'tv') {
+                router.push(`/serie/${item.id}`);
+            }
         }
     },
 }
 </script>
-  

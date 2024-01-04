@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a-input-search v-model:value="searchQuery" placeholder="Buscar películas" style="width: 200px"
+        <a-input-search v-model:value="searchQuery" placeholder="Buscar series" style="width: 200px"
             @search="handleSearch" />
     </div>
 </template>
@@ -26,7 +26,7 @@ export default {
 
         const handleSearch = async (searchQuery) => {
             try {
-                const response = await axios.get(`${API}search/multi`, {
+                const response = await axios.get(`${API}search/tv`, {
                     headers,
                     params: {
                         api_key: TOKEN,
@@ -36,6 +36,7 @@ export default {
 
                 const searchResults = response.data.results;
 
+                // Pasa los resultados de búsqueda a la ruta 'SearchResults'
                 router.push({
                     name: 'SearchResults',
                     query: { results: JSON.stringify(searchResults) },
