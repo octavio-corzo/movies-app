@@ -7,7 +7,19 @@
             <a-col v-for="(item, index ) in searchResults" :key="index" :xs="{ span: 5, offset: 1 }"
                 :lg="{ span: 6, offset: 2 }">
 
-                <a-card class="mt-5 mb-5" hoverable style="width: 240px">
+                <a-card v-if="item.media_type === 'person'" class="mt-5 mb-5" hoverable style="width: 240px">
+                    <template #cover>
+                        <img style="width: 240px; height: auto;" :src="getImageUrl(item.profile_path)"
+                            alt="Backdrop Image" />
+                    </template>
+                    <a-card-meta style="text-align: center;" :title="item.title">
+                        <template #description>{{ }}</template>
+                    </a-card-meta>
+                    <a-menu @click="handleSubmit(item)">
+                        <a-menu-item style="background-color: #001529; color: #FFFF;" class="text-center">Info</a-menu-item>
+                    </a-menu>
+                </a-card>
+                <a-card v-else class="mt-5 mb-5" hoverable style="width: 240px">
                     <template #cover>
                         <img style="width: 240px; height: auto;" :src="getImageUrl(item.poster_path)"
                             alt="Backdrop Image" />
@@ -35,7 +47,6 @@ export default {
         };
     },
     created() {
-        // Recupera los resultados de búsqueda de la ruta
         const results = this.$route.query.results;
         this.searchResults = JSON.parse(results);
     },
@@ -54,6 +65,8 @@ export default {
                 router.push(`/movie/${item.id}`);
             } else if (item.media_type === 'tv') {
                 router.push(`/serie/${item.id}`);
+            } else if (item.media_type === 'person') {
+                router.push(`/person/${item.id}`);
             }
         }
     },

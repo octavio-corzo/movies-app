@@ -1,18 +1,18 @@
 <template>
     <div>
         <a-divider></a-divider>
+        <a-row>
+            <a-col :flex="3">
+                <img class="mt-5" style="width: 800px; height: auto;" :src="getImgMovie(movie['backdrop_path'])" alt=""
+                    cover />
+            </a-col>
+            <a-col :flex="2">
+                <img class="ml-5 mt-5" style="width: 240px; height: auto;" :src="getImgMovie(movie['poster_path'])"
+                    alt="" />
+            </a-col>
+        </a-row>
         <div class="text-container">
-            <a-row>
-                <a-col :span="18" :push="6">
-                    <img class="mt-5" style="width: 800px; height: auto;" :src="getImgMovie(movie['backdrop_path'])" alt=""
-                        cover />
-                </a-col>
-                <a-col :span="6" :pull="18">
-                    <img class="ml-5 mt-5" style="width: 240px; height: auto;" :src="getImgMovie(movie['poster_path'])"
-                        alt="" />
-                </a-col>
-            </a-row>
-            <a-typography-title class="ml-5 mt-5" style="color: #FFFF;">{{ movie['title'] }}</a-typography-title>
+            <a-typography-title class="mt-5 mr-5" style="color: #FFFF;">{{ movie['title'] }}</a-typography-title>
             <div class="container">
                 <p class="ml-5" style="padding-bottom: 20px; color: #FFFF;">{{ movie['overview'] }}</p>
             </div>
